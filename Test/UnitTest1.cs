@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TestByndyusoft;
 using Xunit;
@@ -8,42 +9,91 @@ namespace Test
     public class UnitTest1
     {
         [Fact]
-        public void TestEmptyArray()
+        public void TestNull()
         {
-            List<int> arr = new List<int>();
-            Assert.Throws<ArgumentException>(()=> {
-                int res = Program.SumOfMins(arr);
+            Assert.Throws<NullReferenceException>(() => {
+                double res = Program.SumOfMins(null);
             });
         }
 
         [Fact]
-        public void TestNullArray()
+        public void TestEmptyList()
         {
-            Assert.Throws<NullReferenceException>(() => {
-                int res = Program.SumOfMins(null);
+            ArrayList arr = new ArrayList();
+            Assert.Throws<ArgumentException>(()=> {
+                double res = Program.SumOfMins(arr);
             });
         }
 
         [Fact]
         public void TestCorrectResult()
         {
-            List<int> arr = new List<int> ()
+            ArrayList arr = new ArrayList ()
             {
-                0, 5, -10, 15, 75, -11, -24, 3, 21, 43
+                0, 5, -10.75, 15, 75.43, -11, -24, -27.39, 14.87, 3, 21, 43
             };
-            int res = Program.SumOfMins(arr);
-            Assert.Equal(-35, res);
+            double res = Program.SumOfMins(arr);
+            Assert.Equal(-51.39, res);
         }
 
         [Fact]
-        public void TestCorrectResult2()
+        public void TestALotOfElements()
         {
-            List<int> arr = new List<int>()
-            {
-                0, 'a', -10, 15, 75, -11, -24, 3, 21, 43
-            };
-            int res = Program.SumOfMins(arr);
-            Assert.Equal(-35, res);
+            Random rand = new Random();
+            ArrayList arr = new ArrayList();
+            for (int i = 0; i < 100000000; i++)
+                arr.Add(rand.Next(0, 10000));
+
+            arr.Add(-2);
+            arr.Add(-2);
+
+            double res = Program.SumOfMins(arr);
+            Assert.Equal(-4, res);
         }
+
+        [Fact]
+        public void TestShortArray()
+        {
+            ArrayList arr = new ArrayList() { 5 };
+            Assert.Throws<ArgumentException>(() => {
+                double res = Program.SumOfMins(arr);
+            });
+        }
+
+        [Fact]
+        public void TestConsistChar()
+        {
+            ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, 'd', -24.5 };
+            Assert.Throws<ArgumentException>(() => {
+                double res = Program.SumOfMins(arr);
+            });
+        }
+
+        [Fact]
+        public void TestConsistStr()
+        {
+            ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, "i'm_str", 7, -24.5 };
+            Assert.Throws<ArgumentException>(() => {
+                double res = Program.SumOfMins(arr);
+            });
+        }
+
+        [Fact]
+        public void TestConsistBool()
+        {
+            ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, 15, -24.5, true };
+            Assert.Throws<ArgumentException>(() => {
+                double res = Program.SumOfMins(arr);
+            });
+        }
+        [Fact]
+        public void TestConsistNull()
+        {
+            ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, null, -24.5 };
+            Assert.Throws<ArgumentException>(() => {
+                double res = Program.SumOfMins(arr);
+            });
+        }
+        
     }
 }

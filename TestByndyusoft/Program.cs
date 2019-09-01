@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 namespace TestByndyusoft
 {
@@ -7,45 +9,44 @@ namespace TestByndyusoft
     {
         static void Main(string[] args)
         {
-            int N = 30;
             Random rand = new Random();
-            List<int> arr = new List<int>();
-            for(int i=0; i<N; i++)
-            {
-                //arr.Add(rand.Next(-100, 100));
-                arr.Add('t');
-                Console.WriteLine(arr[i].GetType());
-
-            }
+            ArrayList arr = new ArrayList();
+            //for (int i = 0; i < 30; i++)
+                arr.Add(rand.Next(-30, 30));
             try
             {
-                int resSum = SumOfMins(arr);
+                double resSum = SumOfMins(arr);
                 Console.WriteLine("Anwer is " + resSum.ToString());
             }
-            catch(ArgumentException)
+            catch (ArgumentException e)
             {
-                Console.WriteLine("Array is empty!");
-
+                Console.WriteLine(e.Message);
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                Console.WriteLine("Array is NULL");
+                Console.WriteLine(e.Message);
             }
             Console.ReadLine();
         }
 
-        public static int SumOfMins (List<int> _array)
+        public static double SumOfMins(ArrayList _array)
         {
-            if (_array.Count == 0)
+            if (_array is null) throw new NullReferenceException("List is null");
+            if (_array.Count == 0) throw new ArgumentException("List is empty");
+            if (_array.Count < 2) throw new ArgumentException("List is too short");
+
+            ArrayList sorted_arr = new ArrayList();
+            foreach (object item in _array)
             {
-                throw new ArgumentException();
+                if ((item is string) || (item is char) || (item is bool) || (item is null))
+                    throw new ArgumentException("List does not consist only of numbers");
+                double a = Convert.ToDouble(item);
+                sorted_arr.Add(a);
             }
-            if (_array == null)
-            {
-                throw new NullReferenceException();
-            }
-            _array.Sort();
-            int res = _array[0] + _array[1];
+            
+            sorted_arr.Sort();
+            
+            double res = (double)sorted_arr[0] + (double)sorted_arr[1];
             return res;
         }
     }
