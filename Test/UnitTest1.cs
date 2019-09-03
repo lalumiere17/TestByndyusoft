@@ -11,8 +11,8 @@ namespace Test
         [Fact]
         public void TestNull()
         {
-            Assert.Throws<NullReferenceException>(() => {
-                double res = Program.SumOfMins(null);
+            Assert.Throws<ArgumentNullException>(() => {
+                double res = ArrayAnalyzer.SumOfMins(null);
             });
         }
 
@@ -21,7 +21,7 @@ namespace Test
         {
             ArrayList arr = new ArrayList();
             Assert.Throws<ArgumentException>(()=> {
-                double res = Program.SumOfMins(arr);
+                double res = ArrayAnalyzer.SumOfMins(arr);
             });
         }
 
@@ -30,10 +30,10 @@ namespace Test
         {
             ArrayList arr = new ArrayList ()
             {
-                0, 5, -10.75, 15, 75.43, -11, -24, -27.39, 14.87, 3, 21, 43
+                -27.39, 0, 5, -10.75, 15, 75.43, -11, -24, 14.87, 3, 21, 43, -50
             };
-            double res = Program.SumOfMins(arr);
-            Assert.Equal(-51.39, res);
+            double res = ArrayAnalyzer.SumOfMins(arr);
+            Assert.Equal(-77.39, res);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Test
             arr.Add(-2);
             arr.Add(-2);
 
-            double res = Program.SumOfMins(arr);
+            double res = ArrayAnalyzer.SumOfMins(arr);
             Assert.Equal(-4, res);
         }
 
@@ -56,7 +56,7 @@ namespace Test
         {
             ArrayList arr = new ArrayList() { 5 };
             Assert.Throws<ArgumentException>(() => {
-                double res = Program.SumOfMins(arr);
+                double res = ArrayAnalyzer.SumOfMins(arr);
             });
         }
 
@@ -65,7 +65,7 @@ namespace Test
         {
             ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, 'd', -24.5 };
             Assert.Throws<ArgumentException>(() => {
-                double res = Program.SumOfMins(arr);
+                double res = ArrayAnalyzer.SumOfMins(arr);
             });
         }
 
@@ -74,7 +74,7 @@ namespace Test
         {
             ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, "i'm_str", 7, -24.5 };
             Assert.Throws<ArgumentException>(() => {
-                double res = Program.SumOfMins(arr);
+                double res = ArrayAnalyzer.SumOfMins(arr);
             });
         }
 
@@ -83,7 +83,7 @@ namespace Test
         {
             ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, 15, -24.5, true };
             Assert.Throws<ArgumentException>(() => {
-                double res = Program.SumOfMins(arr);
+                double res = ArrayAnalyzer.SumOfMins(arr);
             });
         }
         [Fact]
@@ -91,7 +91,7 @@ namespace Test
         {
             ArrayList arr = new ArrayList() { 5, 5.5, 0.344, -10, null, -24.5 };
             Assert.Throws<ArgumentException>(() => {
-                double res = Program.SumOfMins(arr);
+                double res = ArrayAnalyzer.SumOfMins(arr);
             });
         }
         
